@@ -179,13 +179,7 @@ tbody tr:hover{
   padding: 0.6rem 2rem 0.6rem 2rem;
  }
  
- .temp{
-  display: flex;
-  justify-content:center;
-  gap: 10rem;
-  align-items: center;
-  padding:1rem 0 1rem 0; 
- }
+ 
   
 
   
@@ -213,7 +207,7 @@ tbody tr:hover{
   justify-content: center;
   align-items: center;
   padding: 2rem 0 2rem 0.7rem;
-  gap: 3rem;
+  gap: 5rem;
   
 }
 table th{
@@ -238,7 +232,9 @@ tbody tr{
 
 
 
-
+.temp .count{
+  white-space: nowrap;
+}
   
   
   

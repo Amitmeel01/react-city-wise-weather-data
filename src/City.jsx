@@ -354,10 +354,103 @@
 
 
 
+// import React, { useEffect, useState } from 'react';
+// import { Link } from 'react-router-dom';
+
+// const API_URL = "https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?select=name%20AS%20city%2C%20cou_name_en%20AS%20country%2Ctimezone%20AS%20time&where=cou_name_en%3D%27India%27%20OR%20cou_name_en%3D%27America%27%20OR%20cou_name_en%3D%27Japan%27&group_by=name%2C%20cou_name_en%2Ctimezone&limit=19899&offset=9";
+
+// const City = () => {
+//   const [cityData, setCityData] = useState([]);
+//   const [searchQuery, setSearchQuery] = useState('');
+//   const [filteredCityData, setFilteredCityData] = useState([]);
+
+//   // Fetch city data from API
+//   // Inside the useEffect for fetching city data
+// // Inside the useEffect for fetching city data
+// useEffect(() => {
+//   const fetchCityData = async () => {
+//     try {
+//       const response = await fetch(API_URL);
+//       const data = await response.json();
+//       console.log('Data:', data); // Log the entire data object
+//       setCityData(data.results); // Set city data to the array inside 'results'
+//     } catch (error) {
+//       console.error('Error fetching data:', error);
+//     }
+//   };
+//   fetchCityData();
+// }, []);
+
+
+//   // Filter city data based on search query
+//   useEffect(() => {
+//     const filteredData = cityData.filter(city =>
+//       (city.city && city.city.toLowerCase().includes(searchQuery.toLowerCase())) ||
+//       (city.country && city.country.toLowerCase().includes(searchQuery.toLowerCase()))
+//     );
+    
+//     setFilteredCityData(filteredData);
+//   }, [searchQuery, cityData]);
+
+//   return (
+//     <div className='city'>
+//       {/* Search input */}
+//       <div className="cityinput">
+//         <input
+//           type="text"
+//           name='city'
+//           placeholder='Search city or country here..'
+//           value={searchQuery}
+//           onChange={(e) => setSearchQuery(e.target.value)}
+//         />
+//         <button>Search</button>
+//       </div>
+
+//       {/* City list */}
+//       <div className="tables">
+//         <div className="table">
+//           <table style={{ border: "solid" }}>
+//             <thead>
+//               <tr>
+//                 <th>City</th>
+//                 <th>Country</th>
+//                 <th>TimeZone</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//             {filteredCityData.map((city, index) => (
+//   <tr key={index}>
+//     <td>
+//       {/* Link to WeatherPage with city name as parameter */}
+//       <Link to={`/weather/${encodeURIComponent(city.city)}`} className='link'>{city.city}</Link>
+//     </td>
+//     <td>
+//       {/* Link to WeatherPage with country name as parameter */}
+//       <Link to={`/weather/${encodeURIComponent(city.city)}`} className='link'>{city.country ? city.country : city.city}</Link>
+//     </td>
+//     <td>
+//       {/* Link to WeatherPage with timezone as parameter */}
+//       <Link to={`/weather/${encodeURIComponent(city.city)}`} className='link'>{city.timezone}</Link>
+//     </td>
+//   </tr>
+// ))}
+
+
+//             </tbody>
+//           </table>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default City;
+
+
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const API_URL = "https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?select=name%20AS%20city%2C%20cou_name_en%20AS%20country%2Ctimezone%20AS%20time&where=cou_name_en%3D%27India%27%20OR%20cou_name_en%3D%27America%27%20OR%20cou_name_en%3D%27Japan%27&group_by=name%2C%20cou_name_en%2Ctimezone&limit=19899&offset=9";
+const API_URL = "https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?select=name%20AS%20city%2C%20cou_name_en%20AS%20country%2Ctimezone%20AS%20time&where=cou_name_en%3D%27India%27%20OR%20cou_name_en%3D%27America%27%20OR%20cou_name_en%3D%27Japan%27&group_by=name%2C%20cou_name_en%2Ctimezone&limit=19000&offset=0";
 
 const City = () => {
   const [cityData, setCityData] = useState([]);
@@ -365,22 +458,19 @@ const City = () => {
   const [filteredCityData, setFilteredCityData] = useState([]);
 
   // Fetch city data from API
-  // Inside the useEffect for fetching city data
-// Inside the useEffect for fetching city data
-useEffect(() => {
-  const fetchCityData = async () => {
-    try {
-      const response = await fetch(API_URL);
-      const data = await response.json();
-      console.log('Data:', data); // Log the entire data object
-      setCityData(data.results); // Set city data to the array inside 'results'
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-  fetchCityData();
-}, []);
-
+  useEffect(() => {
+    const fetchCityData = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        console.log('Data:', data); // Log the entire data object
+        setCityData(data.results); // Set city data to the array inside 'results'
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchCityData();
+  }, []);
 
   // Filter city data based on search query
   useEffect(() => {
@@ -392,6 +482,23 @@ useEffect(() => {
     setFilteredCityData(filteredData);
   }, [searchQuery, cityData]);
 
+  // Debounce search input
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return function(...args) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    };
+  };
+
+  const handleSearch = debounce((value) => {
+    setSearchQuery(value);
+  }, 300);
+
   return (
     <div className='city'>
       {/* Search input */}
@@ -399,11 +506,9 @@ useEffect(() => {
         <input
           type="text"
           name='city'
-          placeholder='Search city or country here..'
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder='Search city or country..'
+          onChange={(e) => handleSearch(e.target.value)}
         />
-        <button>Search</button>
       </div>
 
       {/* City list */}
@@ -418,24 +523,22 @@ useEffect(() => {
               </tr>
             </thead>
             <tbody>
-            {filteredCityData.map((city, index) => (
-  <tr key={index}>
-    <td>
-      {/* Link to WeatherPage with city name as parameter */}
-      <Link to={`/weather/${encodeURIComponent(city.city)}`} className='link'>{city.city}</Link>
-    </td>
-    <td>
-      {/* Link to WeatherPage with country name as parameter */}
-      <Link to={`/weather/${encodeURIComponent(city.city)}`} className='link'>{city.country ? city.country : city.city}</Link>
-    </td>
-    <td>
-      {/* Link to WeatherPage with timezone as parameter */}
-      <Link to={`/weather/${encodeURIComponent(city.city)}`} className='link'>{city.timezone}</Link>
-    </td>
-  </tr>
-))}
-
-
+              {filteredCityData.map((city, index) => (
+                <tr key={index}>
+                  <td>
+                    {/* Link to WeatherPage with city name as parameter */}
+                    <Link to={`/weather/${encodeURIComponent(city.city)}`} className='link'>{city.city}</Link>
+                  </td>
+                  <td>
+                    {/* Link to WeatherPage with country name as parameter */}
+                    <Link to={`/weather/${encodeURIComponent(city.city)}`} className='link'>{city.country ? city.country : city.city}</Link>
+                  </td>
+                  <td>
+                    {/* Link to WeatherPage with timezone as parameter */}
+                    <Link to={`/weather/${encodeURIComponent(city.city)}`} className='link'>{city.timezone}</Link>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
