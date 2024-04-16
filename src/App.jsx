@@ -172,7 +172,7 @@ const App = () => {
   const [bg, setBg] = useState(hot); // Default background
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path='/weather/:cityName' element={
           <div className='app' style={{ backgroundImage: `url(${bg})`, backgroundRepeat: "no-repeat", width: "100vw" }}>
