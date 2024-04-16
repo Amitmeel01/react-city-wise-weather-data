@@ -240,7 +240,7 @@ const App = () => {
   const [bg, setBg] = useState(hot); // Default background
 
   return (
-    <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/react-city-wise-weather-data' : '/'}>
+    <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/react-city-wise-weather-data' : '/'} >
       <Routes>
         <Route path="weather/:cityName" element={(
           <div className='app' style={{ backgroundImage: `url(${bg})`, backgroundRepeat: "no-repeat", width: "100vw" }}>
