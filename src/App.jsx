@@ -161,6 +161,74 @@
 
 
 
+// import React, { useState } from 'react';
+// import hot from './assets/hot.jpg';
+// import cold from './assets/cold.jpg';
+// import WeatherPage from './components/WeatherPage';
+// import { Route, Routes, BrowserRouter } from 'react-router-dom';
+// import City from './City.jsx';
+
+// const App = () => {
+//   const [bg, setBg] = useState(hot); // Default background
+
+//   return (
+//     <BrowserRouter >
+//       <Routes>
+//         <Route path='/weather/:cityName' element={
+//           <div className='app' style={{ backgroundImage: `url(${bg})`, backgroundRepeat: "no-repeat", width: "100vw" }}>
+//             <div className="overlay">
+//               <WeatherPage setBg={setBg} />
+//             </div>
+//           </div>
+//         } />
+//         <Route path='/' element={
+//           <div>
+//             <City />
+//           </div>
+//         } />
+//         {/* <Route path='/weather/:cityName' element={<WeatherPage setBg={setBg} />} /> */}
+
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
+// export default App;
+
+
+// import React, { useState } from 'react';
+// import hot from './assets/hot.jpg';
+// import cold from './assets/cold.jpg';
+// import WeatherPage from './components/WeatherPage';
+// import { Route, Routes, BrowserRouter } from 'react-router-dom';
+// import City from './City.jsx';
+
+// const App = () => {
+//   const [bg, setBg] = useState(hot); // Default background
+
+//   return (
+//     <BrowserRouter >
+//       <Routes>
+//         <Route path="weather/:cityName" element={(
+//           <div className='app' style={{ backgroundImage: `url(${bg})`, backgroundRepeat: "no-repeat", width: "100vw" }}>
+//             <div className="overlay">
+//               <WeatherPage setBg={setBg} />
+//             </div>
+//           </div>
+//         )} />
+//         <Route path="/" element={(
+//           <div>
+//             <City />
+//           </div>
+//         )} />
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
+// export default App;
+
+
 import React, { useState } from 'react';
 import hot from './assets/hot.jpg';
 import cold from './assets/cold.jpg';
@@ -172,22 +240,20 @@ const App = () => {
   const [bg, setBg] = useState(hot); // Default background
 
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/react-city-wise-weather-data' : '/'}>
       <Routes>
-        <Route path='/weather/:cityName' element={
+        <Route path="weather/:cityName" element={(
           <div className='app' style={{ backgroundImage: `url(${bg})`, backgroundRepeat: "no-repeat", width: "100vw" }}>
             <div className="overlay">
               <WeatherPage setBg={setBg} />
             </div>
           </div>
-        } />
-        <Route path='/' element={
+        )} />
+        <Route path="/" element={(
           <div>
             <City />
           </div>
-        } />
-        {/* <Route path='/weather/:cityName' element={<WeatherPage setBg={setBg} />} /> */}
-
+        )} />
       </Routes>
     </BrowserRouter>
   );
