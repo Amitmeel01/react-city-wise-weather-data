@@ -357,7 +357,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const API_URL = "https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?select=name%20AS%20city%2C%20cou_name_en%20AS%20country%2Ctimezone%20AS%20time&where=cou_name_en%3D%27India%27%20OR%20cou_name_en%3D%27japan%27%20OR%20%20cou_name_en%3D%27USA%27%20&group_by=name%2C%20cou_name_en%2Ctimezone&limit=19899&offset=9";
+const API_URL = "https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?select=name%20AS%20city%2C%20cou_name_en%20AS%20country%2Ctimezone%20AS%20time&where=cou_name_en%3D%27India%27%20OR%20cou_name_en%3D%27America%27%20OR%20cou_name_en%3D%27Japan%27&group_by=name%2C%20cou_name_en%2Ctimezone&limit=19899&offset=9";
 
 const City = () => {
   const [cityData, setCityData] = useState([]);
